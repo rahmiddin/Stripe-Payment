@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Buy cool new product</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+      section{
+        border: 1px solid black;
+        display: flex;
+        flex-direction: column;
+      }
+    </style>
+  </head>
+  <body>
+  {% if product %}
+    {% for item in product %}
+      <section>
+        <div class="product">
+          <div class="description">
+            <h3>{{ item.name }}</h3>
+            <h5>{{ item.price }}$</h5>
+          </div>
+        </div>
+        <form action="/create-checkout-session/{{ item.id }}/" method="GET">
+            {% csrf_token %}
+          <button type="submit" id="checkout-button">Buy</button>
+        </form>
+      </section>
+    {% endfor %}
+  {% else %}
+    Нет товаров
+  {% endif %}
+  </body>
